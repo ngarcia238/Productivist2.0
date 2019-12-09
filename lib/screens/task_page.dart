@@ -60,9 +60,9 @@ class _TasksPageState extends State<TasksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(15, 37, 51, 1),
+          backgroundColor: Color(0xFF1d284d),
         ),
-        backgroundColor: Color.fromRGBO(15, 37, 51, 1),
+        backgroundColor: Color(0xFF1d284d),
         body: Container(
           child: Column(
             children: <Widget>[
@@ -79,15 +79,15 @@ class _TasksPageState extends State<TasksPage> {
                           letterSpacing: -1),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(190, 0, 0, 0),
                       child: RawMaterialButton(
                         shape: CircleBorder(),
-                        fillColor: Color.fromRGBO(10, 51, 75, 1),
+                        fillColor: Color(0xFF071030),
                         elevation: 10,
                         child: Icon(
                           Icons.add,
                           size: 50,
-                          color: Color(0xff01A0C7),
+                          color: Colors.tealAccent[400],
                         ),
                         onPressed: () {
                           print(currentUser.tasks);
@@ -130,11 +130,7 @@ class _TasksPageState extends State<TasksPage> {
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(30, 0, 30, 20),
-                                      child: Container(),
-                                    ),
+                                    
                                     Padding(
                                       padding: const EdgeInsets.all(15),
                                       child: Row(
@@ -166,7 +162,7 @@ class _TasksPageState extends State<TasksPage> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(15),
+                                      padding: const EdgeInsets.fromLTRB(15,0,15,15),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -191,9 +187,9 @@ class _TasksPageState extends State<TasksPage> {
                                           elevation: 5.0,
                                           borderRadius:
                                               BorderRadius.circular(15.0),
-                                          color: Color(0xff01A0C7),
+                                          color: Colors.tealAccent[400],
                                           child: MaterialButton(
-                                            minWidth: 300,
+                                            minWidth: 200,
                                             padding: EdgeInsets.fromLTRB(
                                                 40, 5, 40, 5),
                                             onPressed: () {
@@ -225,6 +221,12 @@ class _TasksPageState extends State<TasksPage> {
                   ],
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: Divider(
+                  color: Colors.white,
+                ),
+              ),
               Expanded(
                 child: Container(
                   child: ListView.builder(
@@ -239,18 +241,23 @@ class _TasksPageState extends State<TasksPage> {
                         background: Container(
                           color: Colors.red,
                         ),
-                        child: CheckboxListTile(
-                          checkColor: Colors.white,
-                          activeColor: Color(0xff01A0C7),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                          child: Card(
+                          color: Color(0xFF071030),
+                          child: CheckboxListTile(
+                          checkColor: Color(0xFF071030),
+                          activeColor: Colors.tealAccent[400],
+                          
                           title: !currentUser.tasks[i].completed
                               ? Text(
                                   currentUser.tasks[i].task,
-                                  style: TextStyle(color: Colors.grey[100]),
+                                  style: TextStyle(color: Colors.grey[100], fontSize: 17),
                                 )
                               : Text(
                                   currentUser.tasks[i].task,
                                   style: TextStyle(
-                                      color: Colors.grey[20],
+                                      color: Colors.grey[50], fontSize: 17,
                                       decoration: TextDecoration.lineThrough),
                                 ),
                           value: currentUser.tasks[i].completed,
@@ -265,6 +272,8 @@ class _TasksPageState extends State<TasksPage> {
                             print(currentUser.completed);
                             setState(() {});
                           },
+                        ),
+                        ),
                         ),
                       );
                     },
