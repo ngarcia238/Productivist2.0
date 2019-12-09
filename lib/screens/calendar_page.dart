@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'welcome_page.dart';
 import 'package:productivist/models/user.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -19,6 +20,12 @@ class _CalendarPageState extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: new IconButton(
+               icon: new Icon(Icons.arrow_back, color: Colors.white),
+               onPressed: () {
+                 Navigator.push(context, MaterialPageRoute(builder:(context) => WelcomePage()));
+               },
+              ), 
           title: Text("Calendar Page"),
           backgroundColor: Color.fromRGBO(10, 51, 75, 1),
         ),
