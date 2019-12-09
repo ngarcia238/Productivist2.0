@@ -14,4 +14,15 @@ class Event {
     this.time,
     this.completed = false,
   });
+
+  factory Event.fromJson(Map<String, dynamic>json){
+    return Event(
+      id: json["id"],
+      title: json["title"],
+      location: json["location"],
+      completed: json["completed"],
+      date: json["date"],
+      time: json["time"],
+      );
+  }
 }

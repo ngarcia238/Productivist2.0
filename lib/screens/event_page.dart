@@ -10,11 +10,8 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
-  TextEditingController taskCtrl = TextEditingController();
   TextEditingController eventCtrl = TextEditingController();
-  TextEditingController dateCtrl = TextEditingController();
-  TextEditingController timeCtrl = TextEditingController();
-  TextEditingController locationCtrl = TextEditingController();
+  TextEditingController updateEventCtrl = TextEditingController();
   Event newEvent = Event();
   int _currentValue = 0;
   int value = 0;
@@ -230,6 +227,7 @@ class _EventsPageState extends State<EventsPage> {
                   child: ListView.builder(
                     itemCount: currentUser.events.length,
                     itemBuilder: (_, i) {
+                      Event updatedEvent = currentUser.events[i];
                       return Dismissible(
                         key: Key(UniqueKey().toString()),
                         onDismissed: (direction) {
@@ -243,6 +241,144 @@ class _EventsPageState extends State<EventsPage> {
                           padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
                           child: Card(
                           color: Color(0xFF071030),
+                          child: InkWell(
+                              onLongPress: () {
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0)),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  20, 20, 0, 15),
+                                              child: Text(
+                                                "Edit event",
+                                                style: TextStyle(
+                                                  color: Color(0xFF071030),
+                                                  fontFamily: 'Montserrat-Bold',
+                                                  fontSize: 25,
+                                                  letterSpacing: -1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                30, 20, 30, 10),
+                                            child: Container(
+                                              child: TextField(
+                                                controller: updateEventCtrl,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Description',
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.alarm,
+                                                    color: Colors.purpleAccent,
+                                                  ),
+                                                  onPressed: () {
+                                                    showDatePicker(
+                                                      context: context,
+                                                      initialDate:
+                                                          DateTime.now(),
+                                                      firstDate: DateTime(2001),
+                                                      lastDate: DateTime(2222),
+                                                    ).then((date) {
+                                                      setState(() {
+                                                        newEvent.date =
+                                                            date;
+
+                                                        print(
+                                                            newEvent.date);
+                                                      });
+                                                    });
+                                                  },
+                                                ),
+                                                Text("Date"),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15, 0, 15, 15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.info_outline,
+                                                    color: Colors.redAccent,
+                                                  ),
+                                                  onPressed: () {
+                                                    //_buildItemPicker();
+                                                  },
+                                                ),
+                                                Text("Priority"),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 40),
+                                              child: Material(
+                                                elevation: 5.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                color: Colors.tealAccent[400],
+                                                child: MaterialButton(
+                                                  minWidth: 200,
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      40, 5, 40, 5),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      updatedEvent.title =
+                                                          updateEventCtrl.text;
+                                                    });
+                                                    currentUser.events[i] =
+                                                        updatedEvent.title as Event;
+                                                  },
+                                                  child: Text("Update",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                              fontFamily:
+                                                                  'Montserrat',
+                                                              fontSize: 20)
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                         child: CheckboxListTile(
                           checkColor: Color(0xFF071030),
                           activeColor: Colors.tealAccent[400],
@@ -272,6 +408,7 @@ class _EventsPageState extends State<EventsPage> {
                           },
                         ),
                           ),
+                        ),
                         ),
                       );
                     },

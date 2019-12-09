@@ -14,4 +14,14 @@ class Task {
     this.priority,
     this.category,
   });
+
+  factory Task.fromJson(Map<String, dynamic>json){
+    return Task(
+      id: json["id"],
+      task: json["text"],
+      completed: json["completed"],
+      priority: json["priority"],
+      category: json["category"],
+      );
+  }
 }

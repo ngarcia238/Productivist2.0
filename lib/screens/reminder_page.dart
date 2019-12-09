@@ -13,11 +13,8 @@ class RemindersPage extends StatefulWidget {
 class _RemindersPageState extends State<RemindersPage> {
   String formattedDate;
 
-  TextEditingController taskCtrl = TextEditingController();
-  TextEditingController eventCtrl = TextEditingController();
-  TextEditingController dateCtrl = TextEditingController();
-  TextEditingController timeCtrl = TextEditingController();
-  TextEditingController locationCtrl = TextEditingController();
+  TextEditingController reminderCtrl = TextEditingController();
+  TextEditingController updateReminderCtrl = TextEditingController();
   Reminder newReminder = Reminder();
   int _currentValue = 0;
   int value = 0;
@@ -101,7 +98,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                           EdgeInsets.fromLTRB(30, 20, 30, 10),
                                       child: Container(
                                         child: TextField(
-                                          controller: taskCtrl,
+                                          controller: reminderCtrl,
                                           decoration: InputDecoration(
                                             hintText: 'Description',
                                             border: OutlineInputBorder(),
@@ -178,7 +175,7 @@ class _RemindersPageState extends State<RemindersPage> {
                                             onPressed: () {
                                               setState(() {
                                                 newReminder.text =
-                                                    taskCtrl.text;
+                                                    reminderCtrl.text;
                                               });
                                               currentUser.reminders
                                                   .add(newReminder);
@@ -217,6 +214,7 @@ class _RemindersPageState extends State<RemindersPage> {
                   child: ListView.builder(
                     itemCount: currentUser.reminders.length,
                     itemBuilder: (_, i) {
+                      Reminder updateReminder = currentUser.reminders[i];
                       formattedDate = DateFormat('EEE d MMM')
                           .format(currentUser.reminders[i].remind_at);
                       return Dismissible(
@@ -231,7 +229,145 @@ class _RemindersPageState extends State<RemindersPage> {
                          child: Padding(
                           padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
                           child: Card(
-                          color: Color(0xFF071030),
+                            color: Color(0xFF071030),
+                            child: InkWell(
+                              onLongPress: () {
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0)),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  20, 20, 0, 15),
+                                              child: Text(
+                                                "Edit reminder",
+                                                style: TextStyle(
+                                                  color: Color(0xFF071030),
+                                                  fontFamily: 'Montserrat-Bold',
+                                                  fontSize: 25,
+                                                  letterSpacing: -1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                30, 20, 30, 10),
+                                            child: Container(
+                                              child: TextField(
+                                                controller: updateReminderCtrl,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Description',
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.alarm,
+                                                    color: Colors.purpleAccent,
+                                                  ),
+                                                  onPressed: () {
+                                                    showDatePicker(
+                                                      context: context,
+                                                      initialDate:
+                                                          DateTime.now(),
+                                                      firstDate: DateTime(2001),
+                                                      lastDate: DateTime(2222),
+                                                    ).then((date) {
+                                                      setState(() {
+                                                        newReminder.remind_at =
+                                                            date;
+
+                                                        print(
+                                                            newReminder.remind_at);
+                                                      });
+                                                    });
+                                                  },
+                                                ),
+                                                Text("Date"),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15, 0, 15, 15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.info_outline,
+                                                    color: Colors.redAccent,
+                                                  ),
+                                                  onPressed: () {
+                                                    //_buildItemPicker();
+                                                  },
+                                                ),
+                                                Text("Priority"),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 40),
+                                              child: Material(
+                                                elevation: 5.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                color: Colors.tealAccent[400],
+                                                child: MaterialButton(
+                                                  minWidth: 200,
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      40, 5, 40, 5),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      updateReminder.text =
+                                                          updateReminderCtrl.text;
+                                                    });
+                                                    currentUser.reminders[i] =
+                                                        updateReminder.text as Reminder;
+                                                  },
+                                                  child: Text("Update",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                              fontFamily:
+                                                                  'Montserrat',
+                                                              fontSize: 20)
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                         child: CheckboxListTile(
                           checkColor: Color(0xFF071030),
                           activeColor: Colors.tealAccent[400],
@@ -264,6 +400,7 @@ class _RemindersPageState extends State<RemindersPage> {
                           },
                         ),
                           ),
+                         ),
                          ),
                       );
                     },

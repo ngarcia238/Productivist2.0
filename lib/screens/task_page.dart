@@ -14,10 +14,7 @@ class TasksPage extends StatefulWidget {
 
 class _TasksPageState extends State<TasksPage> {
   TextEditingController taskCtrl = TextEditingController();
-  TextEditingController eventCtrl = TextEditingController();
-  TextEditingController dateCtrl = TextEditingController();
-  TextEditingController timeCtrl = TextEditingController();
-  TextEditingController locationCtrl = TextEditingController();
+  TextEditingController updateTaskCtrl = TextEditingController();
   Task newTask = Task();
   int _currentValue = 0;
   int value = 0;
@@ -130,7 +127,6 @@ class _TasksPageState extends State<TasksPage> {
                                         ),
                                       ),
                                     ),
-                                    
                                     Padding(
                                       padding: const EdgeInsets.all(15),
                                       child: Row(
@@ -162,7 +158,8 @@ class _TasksPageState extends State<TasksPage> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(15,0,15,15),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 0, 15, 15),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -232,6 +229,7 @@ class _TasksPageState extends State<TasksPage> {
                   child: ListView.builder(
                     itemCount: currentUser.tasks.length,
                     itemBuilder: (_, i) {
+                      Task updatedTask = currentUser.tasks[i];
                       return Dismissible(
                         key: Key(UniqueKey().toString()),
                         onDismissed: (direction) {
@@ -242,38 +240,183 @@ class _TasksPageState extends State<TasksPage> {
                           color: Colors.red,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                          padding:
+                              EdgeInsets.only(left: 20, right: 20, bottom: 5),
                           child: Card(
-                          color: Color(0xFF071030),
-                          child: CheckboxListTile(
-                          checkColor: Color(0xFF071030),
-                          activeColor: Colors.tealAccent[400],
-                          
-                          title: !currentUser.tasks[i].completed
-                              ? Text(
-                                  currentUser.tasks[i].task,
-                                  style: TextStyle(color: Colors.grey[100], fontSize: 17),
-                                )
-                              : Text(
-                                  currentUser.tasks[i].task,
-                                  style: TextStyle(
-                                      color: Colors.grey[600], fontSize: 17,
-                                      decoration: TextDecoration.lineThrough),
-                                ),
-                          value: currentUser.tasks[i].completed,
-                          onChanged: (value) {
-                            currentUser.tasks[i].completed =
-                                !currentUser.tasks[i].completed;
-                            currentUser.tasks[i].completed == true
-                                ? currentUser.completed
-                                    .add(currentUser.tasks[i])
-                                : currentUser.completed
-                                    .remove(currentUser.tasks[i].task);
-                            print(currentUser.completed);
-                            setState(() {});
-                          },
-                        ),
-                        ),
+                            color: Color(0xFF071030),
+                            child: InkWell(
+                              onLongPress: () {
+                               
+                                // show the dialog
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Dialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0)),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  20, 20, 0, 15),
+                                              child: Text(
+                                                "Edit task",
+                                                style: TextStyle(
+                                                  color: Color(0xFF071030),
+                                                  fontFamily: 'Montserrat-Bold',
+                                                  fontSize: 25,
+                                                  letterSpacing: -1,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                30, 20, 30, 10),
+                                            child: Container(
+                                              child: TextField(
+                                                controller: updateTaskCtrl,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Description',
+                                                  border: OutlineInputBorder(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.alarm,
+                                                    color: Colors.purpleAccent,
+                                                  ),
+                                                  onPressed: () {
+                                                    showDatePicker(
+                                                      context: context,
+                                                      initialDate:
+                                                          DateTime.now(),
+                                                      firstDate: DateTime(2001),
+                                                      lastDate: DateTime(2222),
+                                                    ).then((date) {
+                                                      setState(() {
+                                                        newTask.created_at =
+                                                            date;
+
+                                                        print(
+                                                            newTask.created_at);
+                                                      });
+                                                    });
+                                                  },
+                                                ),
+                                                Text("Date"),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15, 0, 15, 15),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon: Icon(
+                                                    Icons.info_outline,
+                                                    color: Colors.redAccent,
+                                                  ),
+                                                  onPressed: () {
+                                                    _buildItemPicker();
+                                                  },
+                                                ),
+                                                Text("Priority"),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 40),
+                                              child: Material(
+                                                elevation: 5.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                color: Colors.tealAccent[400],
+                                                child: MaterialButton(
+                                                  minWidth: 200,
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      40, 5, 40, 5),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      updatedTask.task =
+                                                          updateTaskCtrl.text;
+                                                    });
+                                                    currentUser.tasks[i] =
+                                                        updatedTask.task
+                                                            as Task;
+                                                  },
+                                                  child: Text("Update",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                              fontFamily:
+                                                                  'Montserrat',
+                                                              fontSize: 20)
+                                                          .copyWith(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                ),
+                                              )),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: CheckboxListTile(
+                                checkColor: Color(0xFF071030),
+                                activeColor: Colors.tealAccent[400],
+                                title: !currentUser.tasks[i].completed
+                                    ? Text(
+                                        currentUser.tasks[i].task,
+                                        style: TextStyle(
+                                            color: Colors.grey[100],
+                                            fontSize: 17),
+                                      )
+                                    : Text(
+                                        currentUser.tasks[i].task,
+                                        style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 17,
+                                            decoration:
+                                                TextDecoration.lineThrough),
+                                      ),
+                                value: currentUser.tasks[i].completed,
+                                onChanged: (value) {
+                                  currentUser.tasks[i].completed =
+                                      !currentUser.tasks[i].completed;
+                                  currentUser.tasks[i].completed == true
+                                      ? currentUser.completed
+                                          .add(currentUser.tasks[i])
+                                      : currentUser.completed
+                                          .remove(currentUser.tasks[i].task);
+                                  print(currentUser.completed);
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     },
