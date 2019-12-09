@@ -57,9 +57,9 @@ class _EventsPageState extends State<EventsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(15, 37, 51, 1),
+          backgroundColor: Color(0xFF1d284d),
         ),
-        backgroundColor: Color.fromRGBO(15, 37, 51, 1),
+        backgroundColor: Color(0xFF1d284d),
         body: Container(
           child: Column(
             children: <Widget>[
@@ -76,15 +76,15 @@ class _EventsPageState extends State<EventsPage> {
                           letterSpacing: -1),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(165, 0, 0, 0),
                       child: RawMaterialButton(
                         shape: CircleBorder(),
-                        fillColor: Color.fromRGBO(10, 51, 75, 1),
+                        fillColor: Color(0xFF071030),
                         elevation: 10,
                         child: Icon(
                           Icons.add,
                           size: 50,
-                          color: Color(0xff01A0C7),
+                          color: Colors.tealAccent[400],
                         ),
                         onPressed: () {
                           print(currentUser.events);
@@ -127,11 +127,7 @@ class _EventsPageState extends State<EventsPage> {
                                         ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(30, 0, 30, 20),
-                                      child: Container(),
-                                    ),
+                                    
                                     Padding(
                                       padding: const EdgeInsets.all(15),
                                       child: Row(
@@ -163,7 +159,7 @@ class _EventsPageState extends State<EventsPage> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(15),
+                                      padding: const EdgeInsets.fromLTRB(15,0,15,15),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -188,9 +184,9 @@ class _EventsPageState extends State<EventsPage> {
                                           elevation: 5.0,
                                           borderRadius:
                                               BorderRadius.circular(15.0),
-                                          color: Color(0xff01A0C7),
+                                          color: Colors.tealAccent[400],
                                           child: MaterialButton(
-                                            minWidth: 300,
+                                            minWidth: 200,
                                             padding: EdgeInsets.fromLTRB(
                                                 40, 5, 40, 5),
                                             onPressed: () {
@@ -223,6 +219,12 @@ class _EventsPageState extends State<EventsPage> {
                   ],
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: Divider(
+                  color: Colors.white,
+                ),
+              ),
               Expanded(
                 child: Container(
                   child: ListView.builder(
@@ -237,9 +239,13 @@ class _EventsPageState extends State<EventsPage> {
                         background: Container(
                           color: Colors.red,
                         ),
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
+                          child: Card(
+                          color: Color(0xFF071030),
                         child: CheckboxListTile(
-                          checkColor: Colors.white,
-                          activeColor: Color(0xff01A0C7),
+                          checkColor: Color(0xFF071030),
+                          activeColor: Colors.tealAccent[400],
                           title: !currentUser.events[i].completed
                               ? Text(
                                   currentUser.events[i].title,
@@ -248,7 +254,7 @@ class _EventsPageState extends State<EventsPage> {
                               : Text(
                                   currentUser.events[i].title,
                                   style: TextStyle(
-                                      color: Colors.grey[20],
+                                      color: Colors.grey[50],
                                       decoration: TextDecoration.lineThrough),
                                 ),
                           value: currentUser.events[i].completed,
@@ -264,6 +270,8 @@ class _EventsPageState extends State<EventsPage> {
 
                             setState(() {});
                           },
+                        ),
+                          ),
                         ),
                       );
                     },
