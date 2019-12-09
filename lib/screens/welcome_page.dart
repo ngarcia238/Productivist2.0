@@ -19,6 +19,7 @@ class _WelcomePageState extends State<WelcomePage> {
   String formattedDate = DateFormat('EEE d MMM').format(DateTime.now());
   double completionRate =
       (currentUser.completed.length / currentUser.tasks.length).toDouble();
+  int total = currentUser.reminders.length + currentUser.events.length + currentUser.tasks.length;
 
   CalendarController _controller;
   @override
@@ -128,6 +129,7 @@ class _WelcomePageState extends State<WelcomePage> {
 /// Second column should contain the current date count of items
 /// The rest should contain the consecutive weeks
 /////////////////////////////////////////////////////////////////////////
+              
               Row(
                   children: <Widget>[
                     Padding(
@@ -191,7 +193,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         // Count
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                          child: Text("5",
+                          child: Text("${total}",
                             style: TextStyle(
                               fontFamily: 'Montserrat-Bold',
                               fontSize: 25,
@@ -345,17 +347,17 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ),*/
 
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(10, 51, 75, 1),
-                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                ),
-                margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                height: 400,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+              // Row 1 Tasks & Events
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    GestureDetector(
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child:  GestureDetector(
                       onTap: () {
                         print(currentUser.completed.length /
                             currentUser.tasks.length);
@@ -366,7 +368,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 builder: (context) => TasksPage()));
                       },
                       child: Card(
-                        color: Color.fromRGBO(15, 37, 51, 1.0),
+                        color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
                           padding: EdgeInsets.all(12.0),
@@ -374,37 +376,39 @@ class _WelcomePageState extends State<WelcomePage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               SizedBox(
-                                width: 250,
+                                width: 140,
                                 child: Container(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          "${currentUser.tasks.length} tasks",
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                            color: Colors.grey[100],
-                                          ),
-                                        ),
-                                      ),
+                                      
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Text(
                                           "Tasks",
                                           style: TextStyle(
-                                            fontSize: 30.0,
-                                            color: Colors.grey[350],
+                                            fontSize: 25.0,
+                                            color: Colors.grey[100],
                                           ),
                                         ),
                                       ),
                                       Padding(
+                                        padding: const EdgeInsets.only(left: 8, bottom: 4),
+                                        child: Text(
+                                          "${currentUser.tasks.length} Total",
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.grey[350],
+                                          ),
+                                        ),
+                                      ),
+                                        
+                                      Padding(
                                         padding: EdgeInsets.all(4.0),
                                         child: new LinearPercentIndicator(
-                                          width: 220,
+                                          width: 125,
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
@@ -423,7 +427,15 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                     ),
-                    GestureDetector(
+                    ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
@@ -431,7 +443,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 builder: (context) => EventsPage()));
                       },
                       child: Card(
-                        color: Color.fromRGBO(15, 37, 51, 1.0),
+                        color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
                           padding: EdgeInsets.all(12.0),
@@ -439,7 +451,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               SizedBox(
-                                width: 250,
+                                width: 140,
                                 child: Container(
                                   child: Column(
                                     crossAxisAlignment:
@@ -448,36 +460,37 @@ class _WelcomePageState extends State<WelcomePage> {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "Events",
+                                          style: TextStyle(
+                                            fontSize: 25.0,
+                                            color: Colors.grey[350],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8, bottom: 4.0),
                                         child: currentUser.events.length != null
                                             ? Text(
-                                                "${currentUser.events.length} events",
+                                                "${currentUser.events.length} Total",
                                                 style: TextStyle(
                                                   fontSize: 15.0,
                                                   color: Colors.grey[100],
                                                 ),
                                               )
                                             : Text(
-                                                "${currentUser.events.length} events",
+                                                "${currentUser.events.length} Total",
                                                 style: TextStyle(
                                                   fontSize: 15.0,
                                                   color: Colors.grey[100],
                                                 ),
                                               ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          "Events",
-                                          style: TextStyle(
-                                            fontSize: 30.0,
-                                            color: Colors.grey[350],
-                                          ),
-                                        ),
-                                      ),
+                                      
                                       Padding(
                                         padding: EdgeInsets.all(4.0),
                                         child: new LinearPercentIndicator(
-                                          width: 220,
+                                          width: 125,
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
@@ -495,8 +508,22 @@ class _WelcomePageState extends State<WelcomePage> {
                           ),
                         ),
                       ),
+                    ),),
                     ),
-                    GestureDetector(
+                ],
+              ),
+
+              // Row 2 Reminders & 
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child:  GestureDetector(
                       onTap: () {
                         Navigator.push(
                             context,
@@ -504,7 +531,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 builder: (context) => RemindersPage()));
                       },
                       child: Card(
-                        color: Color.fromRGBO(15, 37, 51, 1.0),
+                        color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
                           padding: EdgeInsets.all(12.0),
@@ -512,7 +539,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               SizedBox(
-                                width: 250,
+                                width: 140,
                                 child: Container(
                                   child: Column(
                                     crossAxisAlignment:
@@ -521,37 +548,38 @@ class _WelcomePageState extends State<WelcomePage> {
                                     children: <Widget>[
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "Reminders",
+                                          style: TextStyle(
+                                            fontSize: 25.0,
+                                            color: Colors.grey[350],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8, bottom: 4),
                                         child:
                                             currentUser.reminders.length != null
                                                 ? Text(
-                                                    "${currentUser.reminders.length} events",
+                                                    "${currentUser.reminders.length} Total",
                                                     style: TextStyle(
                                                       fontSize: 15.0,
                                                       color: Colors.grey[100],
                                                     ),
                                                   )
                                                 : Text(
-                                                    "${currentUser.reminders.length} events",
+                                                    "${currentUser.reminders.length} Total",
                                                     style: TextStyle(
                                                       fontSize: 15.0,
                                                       color: Colors.grey[100],
                                                     ),
                                                   ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Text(
-                                          "Reminders",
-                                          style: TextStyle(
-                                            fontSize: 30.0,
-                                            color: Colors.grey[350],
-                                          ),
-                                        ),
-                                      ),
+                                      
                                       Padding(
                                         padding: EdgeInsets.all(4.0),
                                         child: new LinearPercentIndicator(
-                                          width: 220,
+                                          width: 125,
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
@@ -570,9 +598,68 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                     ),
-                  ],
-                ),
-              )
+                    ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: GestureDetector(
+                      onTap: () {
+                        // Update the state of the app
+                        // ...
+                        // Then close the drawer
+                        Navigator.pop(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => CalendarPage()));
+                        setState(() {});
+                      },
+                      child: Card(
+                        color: Color(0xFF071030),
+                        margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                        child: Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 140,
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "Calendar",
+                                          style: TextStyle(
+                                            fontSize: 25.0,
+                                            color: Colors.grey[350],
+                                          ),
+                                        ),
+                                      ),
+                                     
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),),
+                    ),
+                ],
+              ),
+
+//////////////////////////////////////////////////////////////////////
+              
+                              
+
             ],
           ),
         ),
