@@ -31,11 +31,11 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Color(0xFF1d284d),
-      ),
+      ),*/ //CHANGE WELCOME PADDING TO 20 WHEN USING APPBAR
       backgroundColor: Color(0xFF1d284d),
-      drawer: Drawer(
+      /*drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
@@ -75,16 +75,17 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ],
         ),
-      ),
+      ),*/
 
       ///////////////////////////////// UI Design Starts Here //////////////////////////
-      body: Container(
-          child: Column(
+      body: ListView(
+          children: <Widget>[ 
+            Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20, 20, 0, 10),
+                      padding: EdgeInsets.fromLTRB(20, 50, 0, 10),
                       child: Text(
                         "Welcome ",
                         style: TextStyle(
@@ -95,7 +96,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       ),
                     ),
                      Padding(
-                      padding: EdgeInsets.fromLTRB(0, 20, 20, 10),
+                      padding: EdgeInsets.fromLTRB(0, 50, 20, 10),
                       child: Text(
                         "${currentUser.name}",
                         style: TextStyle(
@@ -129,11 +130,16 @@ class _WelcomePageState extends State<WelcomePage> {
 /// Second column should contain the current date count of items
 /// The rest should contain the consecutive weeks
 /////////////////////////////////////////////////////////////////////////
-              
+              Padding(
+                padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                child: Divider(
+                  color: Colors.white54,
+                )),
+
               Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                      padding: EdgeInsets.fromLTRB(25, 10, 0, 0),
                       child: Text("Forecast",
                         style: TextStyle(
                           fontFamily: 'Montserrat-Regular',
@@ -167,7 +173,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         // Count
                         Padding(
                           padding: EdgeInsets.fromLTRB(15, 15, 0, 0),
-                          child: Text("1",
+                          child: Text("0",
                             style: TextStyle(
                               fontFamily: 'Montserrat-SemiBold',
                               fontSize: 25,
@@ -346,14 +352,19 @@ class _WelcomePageState extends State<WelcomePage> {
                   initialCalendarFormat: CalendarFormat.week,
                 ),
               ),*/
+              Padding(
+                padding: EdgeInsets.fromLTRB(25, 20, 25, 0),
+                child: Divider(
+                  color: Colors.white54,
+                )),
 
               // Row 1 Tasks & Events
               Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
 
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                       child: SizedBox(
                           width: 200,
                           height: 200,
@@ -368,6 +379,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                 builder: (context) => TasksPage()));
                       },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(16.0)),
+                        elevation: 10,
                         color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
@@ -443,6 +457,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                 builder: (context) => EventsPage()));
                       },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(16.0)),
+                        elevation: 10,
                         color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
@@ -513,9 +530,9 @@ class _WelcomePageState extends State<WelcomePage> {
                 ],
               ),
 
-              // Row 2 Reminders & 
+              // Row 2 Reminders & Calendar
               Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
 
                     Padding(
@@ -531,6 +548,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                 builder: (context) => RemindersPage()));
                       },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(16.0)),
+                        elevation: 10,
                         color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
@@ -607,16 +627,19 @@ class _WelcomePageState extends State<WelcomePage> {
                           width: 200,
                           height: 200,
                           child: GestureDetector(
-                      onTap: () {
-                        // Update the state of the app
-                        // ...
-                        // Then close the drawer
-                        Navigator.pop(context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => CalendarPage()));
-                        setState(() {});
-                      },
+                            onTap: () {
+                              // Update the state of the app
+                              // ...
+                              // Then close the drawer
+                              Navigator.pop(context);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) => CalendarPage()));
+                              setState(() {});
+                            },
                       child: Card(
+                        shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(16.0)),
+                        elevation: 10,
                         color: Color(0xFF071030),
                         margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
                         child: Padding(
@@ -656,12 +679,76 @@ class _WelcomePageState extends State<WelcomePage> {
                 ],
               ),
 
+              // Row 3 Projects
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                      child: SizedBox(
+                          width: 200,
+                          height: 200,
+                          child:  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProjectPage()));
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(16.0)),
+                        elevation: 10,
+                        color: Color(0xFF071030),
+                        margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+                        child: Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 140,
+                                child: Container(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                          "Projects",
+                                          style: TextStyle(
+                                            fontSize: 25.0,
+                                            color: Colors.grey[350],
+                                          ),
+                                        ),
+                                      ),
+                        
+                                      
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    ),
+                    ),
+
+                ],
+              ),
+
 //////////////////////////////////////////////////////////////////////
               
                               
 
             ],
           ),
+          ],
         ),
     );
   }
