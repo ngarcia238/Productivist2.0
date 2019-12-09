@@ -254,7 +254,7 @@ class _EventsPageState extends State<EventsPage> {
                               : Text(
                                   currentUser.events[i].title,
                                   style: TextStyle(
-                                      color: Colors.grey[50],
+                                      color: Colors.grey[600], fontSize: 17,
                                       decoration: TextDecoration.lineThrough),
                                 ),
                           value: currentUser.events[i].completed,

@@ -257,7 +257,7 @@ class _TasksPageState extends State<TasksPage> {
                               : Text(
                                   currentUser.tasks[i].task,
                                   style: TextStyle(
-                                      color: Colors.grey[50], fontSize: 17,
+                                      color: Colors.grey[600], fontSize: 17,
                                       decoration: TextDecoration.lineThrough),
                                 ),
                           value: currentUser.tasks[i].completed,
