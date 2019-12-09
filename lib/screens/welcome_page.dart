@@ -31,9 +31,9 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(10, 51, 75, 1),
+        backgroundColor: Color(0xFF1d284d),
       ),
-      backgroundColor: Color.fromRGBO(10, 51, 75, 1),
+      backgroundColor: Color(0xFF1d284d),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
@@ -75,30 +75,41 @@ class _WelcomePageState extends State<WelcomePage> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
+
+      ///////////////////////////////// UI Design Starts Here //////////////////////////
+      body: Container(
           child: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                    child: Text(
-                      "Welcome ${currentUser.name}",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 46.0,
-                          fontFamily: "Calibre-Semibold",
-                          letterSpacing: 1.0),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 20, 0, 10),
+                      child: Text(
+                        "Welcome ",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 40.0,
+                            fontFamily: "Montserrat-SemiBold",
+                            letterSpacing: 1.0),
+                      ),
                     ),
-                  )
+                     Padding(
+                      padding: EdgeInsets.fromLTRB(0, 20, 20, 10),
+                      child: Text(
+                        "${currentUser.name}",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 40.0,
+                            fontFamily: "Montserrat-Thin",
+                            letterSpacing: 1.0),
+                      ),
+                    )
                 ],
               ),
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.fromLTRB(25, 5, 10, 30),
+                    padding: EdgeInsets.fromLTRB(25, 5, 10, 10),
                     child: Text(
                       "$formattedDate",
                       style: TextStyle(
@@ -110,7 +121,220 @@ class _WelcomePageState extends State<WelcomePage> {
                   )
                 ],
               ),
-              Container(
+
+////////////////////////// Forecast goes here ///////////////////////////
+/// There should be 7 columns
+/// First column should contain the count of items left uncompleted
+/// Second column should contain the current date count of items
+/// The rest should contain the consecutive weeks
+/////////////////////////////////////////////////////////////////////////
+              Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(25, 25, 0, 0),
+                      child: Text("Forecast",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat-Regular',
+                          fontSize: 27,
+                          color: Colors.tealAccent[400],
+                          letterSpacing: 1,
+                        )
+                      ),
+                    ),
+                  ]
+                ),
+
+
+                //Forecast calendar days
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 15, 0, 0),
+                          child: Text("Past",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(15, 15, 0, 0),
+                          child: Text("1",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                     Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("Mon",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("5",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-Bold',
+                              fontSize: 25,
+                              color: Colors.tealAccent[400],
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("Tue",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("2",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("Wed",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("4",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("Thu",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("1",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("Fri",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                          child: Text("0",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 15, 0),
+                          child: Text("Sat",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                        // Count
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(0, 15, 15, 0),
+                          child: Text("1",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat-SemiBold',
+                              fontSize: 25,
+                              color: Colors.white,
+                            )
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                  ]
+                ),
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+              /*Container(
                 child: TableCalendar(
                   calendarStyle: CalendarStyle(
                     todayColor: Color.fromRGBO(10, 51, 75, 1),
@@ -119,7 +343,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   calendarController: _controller,
                   initialCalendarFormat: CalendarFormat.week,
                 ),
-              ),
+              ),*/
+
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(10, 51, 75, 1),
@@ -351,7 +576,6 @@ class _WelcomePageState extends State<WelcomePage> {
             ],
           ),
         ),
-      ),
     );
   }
 }
